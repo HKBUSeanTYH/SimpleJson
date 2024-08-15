@@ -3,19 +3,15 @@
 
 #include <memory>
 #include <map>
+#include <vector>
+#include <string>
+#include <variant>
+#include <cstddef>
 
-struct NullHolder {
-
-};
-
-union JsonValue {
-    int i;
-    double d;
-    bool b;
-    NullHolder null;
-    std::string s;
-    std::unique_ptr<std::vector<JsonValue>> jsonArr;
-    std::unique_ptr<std::map<std::string, JsonValue>> jsonObj; //allows pointing to nested json obj/array
-};
-
+namespace SimpleJson {
+    class JsonValue;
+    using JsonArray = std::vector<JsonValue>;
+    using JsonObject = std::map<std::string, JsonValue>;
+    using JsonValue = std::variant<std::monostate, std::nullptr_t, int, double, bool, std::string, JsonArray, JsonObject>;
+}
 #endif
