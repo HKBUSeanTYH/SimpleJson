@@ -1,6 +1,9 @@
-#include <iostream>
+#include "JsonValue.h"
+#include <sstream>
 
 int main() {
-    std::cout << "SimpleJson";
-    return 0;
+    std::string input {"{ \"json\": \n1.0 }"};
+    JsonValue root{};
+    std::istringstream(input) >> root;
+    return 0; 
 }

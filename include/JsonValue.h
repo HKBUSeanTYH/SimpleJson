@@ -9,13 +9,10 @@
 #include <cstddef>
 #include <iostream>
 
-namespace SimpleJson {
-    class JsonValue;
-    using JsonArray = std::vector<JsonValue>;
-    using JsonObject = std::map<std::string, JsonValue>;
-    using JsonValue = std::variant<std::monostate, std::nullptr_t, int, double, bool, std::string, JsonArray, JsonObject>;
-
-    std::istream& operator >>(std::istream&, JsonValue&);
-    // std::ostream& operator <<(std::ostream&, const JsonValue&);
-}
+struct JsonValue;
+struct JsonValue {
+    std::variant<std::monostate, std::nullptr_t, int, double, bool, std::string, std::vector<JsonValue>, std::map<std::string, JsonValue>> data_;
+};
+std::istream& operator >>(std::istream&, JsonValue&);
+// std::ostream& operator <<(std::ostream&, const JsonValue&);
 #endif
