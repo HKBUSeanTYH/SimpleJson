@@ -48,9 +48,9 @@ namespace {
             ++start;
         }
         if (floating_point) {
-            json_val.data_ = std::stod(str);
+            json_val = std::stod(str);
         } else {
-            json_val.data_ = std::stoi(str);
+            json_val = std::stoi(str);
         }
     }
 
@@ -60,7 +60,7 @@ namespace {
             str.push_back(*start);
         }
         if (str == "null") {
-            json_val.data_ = nullptr;
+            json_val = nullptr;
         } else {
             throw std::runtime_error("JSON syntax exception - malformed value");
         }
@@ -72,7 +72,7 @@ namespace {
             str.push_back(*start);
         }
         if (str == "true") {
-            json_val.data_ = true;
+            json_val = true;
         } else {
             throw std::runtime_error("JSON syntax exception - malformed value");
         }
@@ -84,7 +84,7 @@ namespace {
             str.push_back(*start);
         }
         if (str == "false") {
-            json_val.data_ = false;
+            json_val = false;
         } else {
             throw std::runtime_error("JSON syntax exception - malformed value");
         }
@@ -100,18 +100,18 @@ namespace {
                 return;
             } else if (c == '{') {
                 std::map<std::string, JsonValue> nested_map{};
-                nested.data_ = nested_map;
+                nested = nested_map;
                 parse_obj(++start, end, nested_map);
                 array.push_back(nested);
             } else if (c == '[') {
                 std::vector<JsonValue> nested_arr{};
-                nested.data_ = nested_arr;
+                nested = nested_arr;
                 parse_array(start, end, nested_arr);
                 array.push_back(nested);
             } else if (c == '"') {
                 std::string str{};
                 read_string(++start, end, str);
-                nested.data_ = str;
+                nested = str;
                 array.push_back(nested);
             } else if (std::isdigit(c) || c == '-' || c == '.') {
                 parse_numeric(start, end, nested);
@@ -162,18 +162,18 @@ namespace {
             JsonValue nested{};
             if (c == '{') {
                 std::map<std::string, JsonValue> nested_map{};
-                nested.data_ = nested_map;
+                nested = nested_map;
                 parse_obj(++start, end, nested_map);
                 map.emplace(key, nested);
             } else if (c == '[') {
                 std::vector<JsonValue> nested_arr{};
-                nested.data_ = nested_arr;
+                nested = nested_arr;
                 parse_array(start, end, nested_arr);
                 map.emplace(key, nested);
             } else if (c == '"') {
                 std::string str{};
                 read_string(++start, end, str);
-                nested.data_ = str;
+                nested = str;
                 map.emplace(key, nested);
             } else if (std::isdigit(c) || c == '-' || c == '.') {
                 parse_numeric(start, end, nested);
@@ -207,15 +207,15 @@ namespace {
         if (c =='{') {
             std::map<std::string, JsonValue> map{};
             parse_obj(++start, end, map);
-            json_val.data_ = map;
+            json_val = map;
         } else if (c == '[') {
             std::vector<JsonValue> arr{};
             parse_array(++start, end, arr);
-            json_val.data_ = arr;
+            json_val = arr;
         } else if (c == '"') {
             std::string str{};
             read_string(++start, end, str);
-            json_val.data_ = str;
+            json_val = str;
         } else if (std::isdigit(c) || c == '-' || c == '.') {
             parse_numeric(start, end, json_val);
         } else if (c == 'n') {
