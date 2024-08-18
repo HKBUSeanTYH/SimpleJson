@@ -2,8 +2,8 @@
 #include <sstream>
 
 int main() {
-    std::string input {"{ \"json\": \"sean\" }"};
+    std::string input {"{ \"json\": 1.0 }"};
     JsonValue root{};
-    std::istringstream(input) >> root;
+    std::istringstream(input) >> root; 
     return 0; 
 }
