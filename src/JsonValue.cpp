@@ -32,7 +32,7 @@ namespace {
         bool floating_point{false};
         while (start != end) {
             char c {*start};
-            if (std::isdigit(c) || c == '-' || c == 'e') {
+            if (std::isdigit(c) || c == '-' || c == 'e' || c == '+') {
                 str.push_back(c);
             } else if (c == '.') {
                 if (floating_point) {
