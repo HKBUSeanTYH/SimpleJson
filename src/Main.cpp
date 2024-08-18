@@ -2,7 +2,7 @@
 #include <sstream>
 
 int main() {
-    std::string input {"{ \"json\": 1.0 }"};
+    std::string input {"{ \"json\": [1.0, 2.0, 3.0] }"};
     JsonValue root{};
     std::istringstream(input) >> root; 
     return 0; 

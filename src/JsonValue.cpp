@@ -100,13 +100,13 @@ namespace {
                 return;
             } else if (c == '{') {
                 std::map<std::string, JsonValue> nested_map{};
-                nested = nested_map;
                 parse_obj(++start, end, nested_map);
+                nested = nested_map;
                 array.push_back(nested);
             } else if (c == '[') {
                 std::vector<JsonValue> nested_arr{};
+                parse_array(++start, end, nested_arr);
                 nested = nested_arr;
-                parse_array(start, end, nested_arr);
                 array.push_back(nested);
             } else if (c == '"') {
                 std::string str{};
@@ -162,13 +162,13 @@ namespace {
             JsonValue nested{};
             if (c == '{') {
                 std::map<std::string, JsonValue> nested_map{};
-                nested = nested_map;
                 parse_obj(++start, end, nested_map);
+                nested = nested_map;
                 map.emplace(key, nested);
             } else if (c == '[') {
                 std::vector<JsonValue> nested_arr{};
+                parse_array(++start, end, nested_arr);
                 nested = nested_arr;
-                parse_array(start, end, nested_arr);
                 map.emplace(key, nested);
             } else if (c == '"') {
                 std::string str{};
