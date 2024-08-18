@@ -8,6 +8,7 @@
 #include <variant>
 #include <cstddef>
 #include <iostream>
+#include <exception>
 
 struct JsonValue;
 struct JsonValue {
