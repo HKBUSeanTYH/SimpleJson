@@ -244,6 +244,7 @@ std::istream& operator>>(std::istream& is, JsonValue& json_val) {
     return is;
 }
 
-// std::ostream& operator<<(std::ostream& os, const SimpleJson::JsonValue& json_val) {
-
-// }
+std::ostream& operator<<(std::ostream& os, const JsonValue& json_val) {
+    
+    return os;
+}
