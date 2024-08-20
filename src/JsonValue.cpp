@@ -244,7 +244,39 @@ std::istream& operator>>(std::istream& is, JsonValue& json_val) {
     return is;
 }
 
-std::ostream& operator<<(std::ostream& os, const JsonValue& json_val) {
-    
+// template <typename T>
+// void print (std::ostream& os, const T& val) {
+//     using boost::typeindex::type_id_with_cvr;
+//     os << type_id_with_cvr<T>().pretty_name() << ",\n " << type_id_with_cvr<decltype(val)>().pretty_name();
+// }
+
+std::ostream& operator<<(std::ostream& os, JsonValue& json_val) {
+    std::visit(overloaded{
+        [&os](std::monostate &){ os << "Empty JsonValue"; }, // An uninitialized json object, probably an error
+        [&os](std::nullptr_t &){ os << "null";},
+        [&os](auto & val){ os << val;},
+        [&os](std::vector<JsonValue> &vec){
+            os << "[ ";
+            for (size_t i = 0; i < vec.size(); ++i) {
+                if (i != 0) {
+                    os << ", ";
+                }
+                os << vec[i];
+            }
+            os << " ]";
+        },
+        [&os](std::map<std::string, JsonValue> & val){
+            os << "{ ";
+            auto begin = val.begin();
+            for (auto i = val.begin(); i != val.end();++i) {
+                if (i != begin) {
+                    os << ", ";
+                }
+                os << "(" <<i->first << ":" << i->second << ")";
+            }
+            os << " }";
+        }
+    }, json_val);
+
     return os;
 }

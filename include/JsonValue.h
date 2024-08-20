@@ -10,6 +10,8 @@
 #include <iostream>
 #include <exception>
 #include <ranges>
+#include <algorithm>
+#include <boost/type_index.hpp>
 
 class JsonValue;
 using JsonVariant = std::variant<std::monostate, std::nullptr_t, int, double, bool, std::string, std::vector<JsonValue>, std::map<std::string, JsonValue>>;
@@ -19,7 +21,7 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
 class JsonValue : public JsonVariant{
     friend std::istream& operator >>(std::istream&, JsonValue&);
-    friend std::ostream& operator <<(std::ostream&, const JsonValue&);
+    friend std::ostream& operator <<(std::ostream&, JsonValue&);
     public:
         using JsonVariant::JsonVariant;
 };
